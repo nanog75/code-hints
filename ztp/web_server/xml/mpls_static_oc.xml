@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<config>
+	<network-instances xmlns="http://openconfig.net/yang/network-instance">
+		<network-instance>
+			<name>default</name>
+			<config>
+				<name>default</name>
+			</config>
+		</network-instance>
+	</network-instances>
+	<mpls-static xmlns="http://cisco.com/ns/yang/Cisco-IOS-XR-mpls-static-cfg">
+		<enable></enable>
+		<interfaces>
+			<interface>
+				<interface-name>HundredGigE0/0/1/0</interface-name>
+			</interface>
+			<interface>
+				<interface-name>HundredGigE0/0/1/1</interface-name>
+			</interface>
+		</interfaces>
+	</mpls-static>
+</config>
