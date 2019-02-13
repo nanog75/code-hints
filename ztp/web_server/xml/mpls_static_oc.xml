@@ -12,11 +12,14 @@
 		<enable></enable>
 		<interfaces>
 			<interface>
-				<interface-name>HundredGigE0/0/1/0</interface-name>
+				<interface-name>GigabitEthernet0/0/0/0</interface-name>
 			</interface>
 			<interface>
-				<interface-name>HundredGigE0/0/1/1</interface-name>
+				<interface-name>GigabitEthernet0/0/0/1</interface-name>
 			</interface>
+			<interface>
+                                <interface-name>GigabitEthernet0/0/0/2</interface-name>
+                        </interface>
 		</interfaces>
 	</mpls-static>
 </config>

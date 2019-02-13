@@ -20,12 +20,12 @@ rootLogger.setLevel(logging.DEBUG)
 handler = logging.StreamHandler()
 rootLogger.addHandler(handler)
 
-WEB_SERVER_URL = "http://192.168.122.1/"
+WEB_SERVER_URL = "http://100.96.0.20/"
 PIP_RPM_URL = WEB_SERVER_URL + "packages/python-pip-7.1.0-r0.0.core2_64.rpm"
-SERVER_XML_URL = WEB_SERVER_URL+"/xml/"
-SYSLOG_SERVER = "192.168.122.1"
+SERVER_XML_URL = WEB_SERVER_URL+"xml/"
+SYSLOG_SERVER = "100.96.0.20"
 SYSLOG_PORT = "514"
-HTTPS_PROXY = "http://proxy-wsa.esl.cisco.com:80"
+HTTPS_PROXY = ""
 XML_FILE_LIST = ['mpls_static_oc.xml', 'lldp_config_oc.xml', 'grpc_config.xml']
 
 def install_and_import(package):
@@ -184,23 +184,23 @@ if __name__ == '__main__':
           sys.exit(1)
 
 
-     # Download xmlfiles to be used with ncclient edit_config:
+    # Download xmlfiles to be used with ncclient edit_config:
  
-     downloaded_xml_filepaths=[]
-     for xml_file in [xml_file_list]:
-         download_xml = ztp_script.download_file(SERVER_XML_URL+str(xml_file), destination_folder="/root/")
- 
-         if download_xml["status"] == "error":
-             ztp_script.syslogger.info("Failed to download "+str(xml_file))
-             sys.exit(1)
+    downloaded_xml_filepaths=[]
+    for xml_file in XML_FILE_LIST:
+        download_xml = ztp_script.download_file(SERVER_XML_URL+str(xml_file), destination_folder="/root/")
 
-         filename = download_xml["filename"]
-         folder = download_xml["folder"]
-         filepath = os.path.join(folder, filename)
-         downloaded_xml_filepaths.append(filepath)
+        if download_xml["status"] == "error":
+            ztp_script.syslogger.info("Failed to download "+str(xml_file))
+            sys.exit(1)
 
-     print(downloaded_xml_filepaths)
-     ztp_script.syslogger.info(downloaded_xml_filepaths)
+        filename = download_xml["filename"]
+        folder = download_xml["folder"]
+        filepath = os.path.join(folder, filename)
+        downloaded_xml_filepaths.append(filepath)
+
+    print(downloaded_xml_filepaths)
+    ztp_script.syslogger.info(downloaded_xml_filepaths)
 
     # Choose any ip you need for the host value
     # This will be set up as a local loopback(/32) that the onbox ncclient will connect 
