@@ -26,7 +26,20 @@ SERVER_XML_URL = WEB_SERVER_URL+"xml/"
 SYSLOG_SERVER = "100.96.0.20"
 SYSLOG_PORT = "514"
 HTTPS_PROXY = ""
-XML_FILE_LIST = ['mpls_static_oc.xml', 'lldp_config_oc.xml', 'grpc_config.xml']
+
+# List of XML files to be downloaded and applied as configuration 
+# through ncclient onbox 
+XML_FILE_LIST = ['mpls_static.xml', 
+                 'lldp_config_oc.xml', 
+                 'grpc_config.xml',
+                 'interface_config_oc.xml']
+
+# Use this Serial Number map to figure out the router specific URL
+# to use for downloads based on the local router's Serial Number
+SERIAL_NO_MAP = {'FGE00050000': 'rtr1',
+                 'FGE00080000': 'rtr2',
+                 'FGE000b0000': 'rtr3',
+                 'FGE00170000': 'rtr4'}
 
 def install_and_import(package):
     import importlib
@@ -88,6 +101,8 @@ class ZtpFunctions(ZtpHelpers):
             return None 
 
 
+
+
     def run_bash(self, cmd=None, vrf="global-vrf", pid=1):
         """User defined method in Child Class
            Wrapper method for basic subprocess.Popen to execute 
@@ -124,6 +139,33 @@ class ZtpFunctions(ZtpHelpers):
             status = process.returncode
 
             return {"status" : status, "output" : out, "error" : err}
+
+
+
+    def get_serial_number(self):
+        """User defined method in Child Class
+           Method to fetch the serial number of the router
+           that this script is running on. Can be useful in
+           invoking router/device specific URLs to take specific
+           action based on the router.
+           :return: Returns Serial number of the device (also used
+                    by ZTP DHCP requests) on success
+                    Returns empty string on failure
+           :rtype: str 
+        """
+        cmd = "dmidecode -s system-serial-number | grep -v -e \"^#\""        
+        response = self.run_bash(cmd)
+        if not response["status"]:
+            self.syslogger.info("Successfully fetched Serial Number:")
+            if self.debug:
+                self.logger.debug(response["output"])
+            return response["output"].strip()
+        else:
+            self.syslogger.info("Failed to fetch Serial Number:")
+            if self.debug:
+                self.logger.debug(response["output"])
+                self.logger.debug(response["error"])
+            return ""
 
 
 if __name__ == '__main__':
@@ -185,10 +227,16 @@ if __name__ == '__main__':
 
 
     # Download xmlfiles to be used with ncclient edit_config:
- 
+
+    # Fetch Serial Number to invoke rtr specific url
+
+    serial_no = ztp_script.get_serial_number()
+    router_name = SERIAL_NO_MAP[str(serial_no)]
+
     downloaded_xml_filepaths=[]
     for xml_file in XML_FILE_LIST:
-        download_xml = ztp_script.download_file(SERVER_XML_URL+str(xml_file), destination_folder="/root/")
+        download_xml = ztp_script.download_file(SERVER_XML_URL+str(router_name)+"/"+str(xml_file),
+                                                destination_folder="/root/")
 
         if download_xml["status"] == "error":
             ztp_script.syslogger.info("Failed to download "+str(xml_file))
