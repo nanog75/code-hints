@@ -32,7 +32,8 @@ HTTPS_PROXY = ""
 XML_FILE_LIST = ['mpls_static.xml', 
                  'lldp_config_oc.xml', 
                  'grpc_config.xml',
-                 'interface_config_oc.xml']
+                 'interface_config_oc.xml',
+                 'hostname.xml']
 
 # Use this Serial Number map to figure out the router specific URL
 # to use for downloads based on the local router's Serial Number

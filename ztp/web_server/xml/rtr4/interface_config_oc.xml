@@ -18,9 +18,9 @@
 					<ipv4 xmlns="http://openconfig.net/yang/interfaces/ip">
 						<addresses>
 							<address>
-								<ip>10.2.1.20</ip>
+								<ip>10.8.1.10</ip>
 								<config>
-									<ip>10.2.1.20</ip>
+									<ip>10.8.1.10</ip>
 									<prefix-length>24</prefix-length>
 								</config>
 							</address>
@@ -52,9 +52,9 @@
 					<ipv4 xmlns="http://openconfig.net/yang/interfaces/ip">
 						<addresses>
 							<address>
-								<ip>10.4.1.10</ip>
+								<ip>10.5.1.20</ip>
 								<config>
-									<ip>10.4.1.10</ip>
+									<ip>10.5.1.20</ip>
 									<prefix-length>24</prefix-length>
 								</config>
 							</address>
@@ -86,9 +86,9 @@
                                         <ipv4 xmlns="http://openconfig.net/yang/interfaces/ip">
                                                 <addresses>
                                                         <address>
-                                                                <ip>10.5.1.10</ip>
+                                                                <ip>10.6.1.20</ip>
                                                                 <config>
-                                                                        <ip>10.5.1.10</ip>
+                                                                        <ip>10.6.1.20</ip>
                                                                         <prefix-length>24</prefix-length>
                                                                 </config>
                                                         </address>
@@ -99,6 +99,35 @@
                                                         <enabled>true</enabled>
                                                 </config>
                                         </ipv6>
+                                </subinterface>
+                        </subinterfaces>
+		</interface>
+		<interface>
+                        <name>GigabitEthernet0/0/0/3</name>
+                        <config>
+                                <name>GigabitEthernet0/0/0/3</name>
+                                <type xmlns:idx="urn:ietf:params:xml:ns:yang:iana-if-type">idx:ethernetCsmacd</type>
+                                <enabled>true</enabled>
+                        </config>
+                        <ethernet xmlns="http://openconfig.net/yang/interfaces/ethernet">
+                                <config>
+                                        <auto-negotiate>false</auto-negotiate>
+                                </config>
+                        </ethernet>
+                        <subinterfaces>
+                                <subinterface>
+                                        <index>0</index>
+                                        <ipv4 xmlns="http://openconfig.net/yang/interfaces/ip">
+                                                <addresses>
+                                                        <address>
+                                                                <ip>10.7.1.20</ip>
+                                                                <config>
+                                                                        <ip>10.7.1.20</ip>
+                                                                        <prefix-length>24</prefix-length>
+                                                                </config>
+                                                        </address>
+                                                </addresses>
+                                        </ipv4>
                                 </subinterface>
                         </subinterfaces>
                 </interface>
@@ -115,9 +144,9 @@
 					<ipv4 xmlns="http://openconfig.net/yang/interfaces/ip">
 						<addresses>
 							<address>
-								<ip>172.16.2.1</ip>
+								<ip>172.16.4.1</ip>
 								<config>
-									<ip>172.16.2.1</ip>
+									<ip>172.16.4.1</ip>
 									<prefix-length>32</prefix-length>
 								</config>
 							</address>
