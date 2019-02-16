@@ -36,10 +36,10 @@ XML_FILE_LIST =  ['lldp_config_oc.xml',
 
 # Use this Serial Number map to figure out the router specific URL
 # to use for downloads based on the local router's Serial Number
-SERIAL_NO_MAP = {'FGE00050000': 'rtr1',
-                 'FGE00080000': 'rtr2',
-                 'FGE000b0000': 'rtr3',
-                 'FGE00170000': 'rtr4'}
+SERIAL_NO_MAP = {'FGE00080000': 'rtr1',
+                 'FGE000e0000': 'rtr2',
+                 'FGE00140000': 'rtr3',
+                 'FGE002c0000': 'rtr4'}
 
 def install_and_import(package):
     import importlib
