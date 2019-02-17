@@ -23,91 +23,41 @@ ANSIBLE_METADATA = {
 
 DOCUMENTATION = """
 ---
-module: ip_destination_reachable
-short_description: Verify rechability of an IP destination
-description:
-    - Uses IP ICMP echo messages to probe the reachability of an IP prefix.
-    - The module relies on GNMI to execute configure BGP on a router
-author: "Akshat Sharma (@irakshat)"
-
-options:
-    host:
-        description:
-            - IP source to send rechability probes from
-        type: str
-        required: true
-        default: null
-        choices: []
-        aliases: []
-
-    destination:
-        description:
-            - IP destination to send reachability probes to
-        type: str
-        required: true
-        default: null
-        choices: []
-        aliases: []
-
-    repeat_count:
-        description:
-            - Number of probes to test for reachability
-        type: int
-        required: false
-        default: 5
-        choices: []
-        aliases: []
-
-    vrf_name:
-        description:
-            - Name of VRF used as context for reachability test
-        type: str
-        required: false
-        default: null
-        choices: []
-        aliases: []
-
-    min_success_rate:
-        description:
-            - Percentage threshold to declare destination as reachable
-        type: int
-        required: true
-        default: null
-        choices: []
-        aliases: []
-
+module: configure_bgp_oc_ydk
 requirements:
-    - ydk 0.6.3 (python)
-    - ydk-models-cisco-ios-xr 6.3.1 (python)
+    - ydk 0.8.1 (python)
+    - ydk-models-cisco-ios-xr 6.5.1 (python)
 """
 
 EXAMPLES = """
-- ip_destination_reachable:
-    host: '10.0.0.1'
-    destination: '10.0.0.2'
-    min_success_rate: 100
-    vrf_name: 'default'
+name: configure BGP using YDK with GNMI
+      config_bgp_oc_ydk:
+        yang_repo_location: '/home/userx/yang'
+        host: "10.1.1.20"
+        grpc_port: "57777"
+        username: "rtruser"
+        password: "rtrcreds"
+        crud_op: "add"
+        bgp_params: "{{ bgp_parameters }}"
+
+where bgp_params-->
+
+bgp_parameters: {
+                       'vrf': 'default',
+                       'as': "65000",
+                       'router_id': "172.16.1.1",
+                       'peer-group-name': "IBGP",
+                       'peer-as': "65000",
+                       'peer-group-local-address': "172.16.1.1",
+                       'neighbor': "172.16.4.1"
+                      }
+
+
 """
 
 RETURN = """
-success_rate:
-  description: Percentage of successful reachability probes
-  returned: ping RPC succeeds
-  type: int
-rtt_min:
-  description: minimum round trip time of all probes
-  returned: ping RPC succeeds
-  type: int
-rtt_avg:
-  description: average round trip time of all probes
-  returned: ping RPC succeeds
-  type: int
-rtt_max:
-  description: maximum round trip time of all probes
-  returned: ping RPC succeeds
-  type: int
+  True or False based on the operation result from ydk
 """
-
 
 from ansible.module_utils.basic import AnsibleModule
 
