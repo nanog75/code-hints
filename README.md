@@ -1,2 +1,2 @@
-# code-hints
-Code Samples showcasing more than you need to know before you attempt the hackathon on the Nanog75 Hackathon Topology.
+# code-samples
+Code Samples to showcase a typical workflow using the Nanog75 Hackathon Topology. Add and Modify to achieve the same goal.
